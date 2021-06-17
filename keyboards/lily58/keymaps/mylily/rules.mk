@@ -5,9 +5,9 @@
 BOOTMAGIC_ENABLE = no       # Virtual DIP switch configuration
 MOUSEKEY_ENABLE = yes        # Mouse keys
 EXTRAKEY_ENABLE = no        # Audio control and System control
-CONSOLE_ENABLE = yes         # Console for debug
+CONSOLE_ENABLE = no         # Console for debug
 COMMAND_ENABLE = yes         # Commands for debug and configuration
-COMBO_ENABLE = yes
+COMBO_ENABLE = no
 NKRO_ENABLE = yes            # Nkey Rollover - if this doesn't work, see here: https://github.com/tmk/tmk_keyboard/wiki/FAQ#nkro-doesnt-work
 BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
 MIDI_ENABLE = no            # MIDI controls
@@ -23,9 +23,9 @@ SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
 
 # TAP_DANCE_ENABLE = yes
 
-RAW_ENABLE = yes
+# RAW_ENABLE = yes
 
-Link_Time_Optimization = yes
+# Link_Time_Optimization = yes
 
 # If you want to change the display of OLED, you need to change here
 SRC +=  ./lib/logo_reader.c \
