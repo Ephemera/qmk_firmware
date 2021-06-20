@@ -38,6 +38,12 @@ enum custom_keycodes {
 #define NUM_NO LT(_NUM, KC_NO)
 #define FUN_NO LT(_FUN, KC_NO)
 
+#define U_RDO SCMD(KC_Z)
+#define U_PST LCMD(KC_V)
+#define U_CPY LCMD(KC_C)
+#define U_CUT LCMD(KC_X)
+#define U_UND LCMD(KC_Z)
+
 /* enum combo_events { */
 /*   CB_TG_QT, */
 /* }; */
@@ -144,7 +150,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______, \
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______,                            KC_AGIN, KC_PSTE, KC_COPY, KC_CUT,  KC_UNDO, _______, \
+     _______, _______, _______, _______, _______, _______,                            U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,   _______, \
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                            KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, KC_CAPS, \
   //├────────┼────────┼────────┼────────┼────────┼────────┼───────┐         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
@@ -258,22 +264,22 @@ const char *read_layer_state(void);
 const char *read_logo(void);
 void set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
-const char *read_keylogs(void);
+// const char *read_keylogs(void);
 
 // const char *read_mode_icon(bool swap);
 // const char *read_host_led_state(void);
-// void set_timelog(void);
-// const char *read_timelog(void);
+void set_timelog(void);
+const char *read_timelog(void);
 
 void oled_task_user(void) {
   if (is_keyboard_master()) {
     // If you want to change the display of OLED, you need to change here
     oled_write_ln(read_layer_state(), false);
     oled_write_ln(read_keylog(), false);
-    oled_write_ln(read_keylogs(), false);
+    //oled_write_ln(read_keylogs(), false);
     //oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
     //oled_write_ln(read_host_led_state(), false);
-    //oled_write_ln(read_timelog(), false);
+    oled_write_ln(read_timelog(), false);
   } else {
     oled_write(read_logo(), false);
   }
@@ -287,7 +293,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef OLED_DRIVER_ENABLE
     set_keylog(keycode, record);
 #endif
-    // set_timelog();
+    set_timelog();
   }
 
   /* switch (keycode) { */
