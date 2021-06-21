@@ -31,3 +31,10 @@
 #define MOUSEKEY_MAX_SPEED      6
 #undef MOUSEKEY_TIME_TO_MAX
 #define MOUSEKEY_TIME_TO_MAX    64
+
+
+#define ENCODERS_PAD_A { B2 }
+#define ENCODERS_PAD_B { B3 }
+#define ENCODERS_PAD_A_RIGHT { F7 }
+#define ENCODERS_PAD_B_RIGHT { F6 }
+#define ENCODER_RESOLUTION 4

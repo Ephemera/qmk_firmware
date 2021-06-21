@@ -207,6 +207,103 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_F11,  KC_F4,   KC_F5,   KC_F6,   KC_SLCK, U_NA,    KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
     KC_F10,  KC_F1,   KC_F2,   KC_F3,   KC_PAUS, U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
     U_NP,    U_NP,    KC_APP,  KC_SPC,  KC_TAB,  U_NA,    U_NA,    U_NA,    U_NP,    U_NP
+  ),
+  [QWERTY] = LAYOUT_miryoku(
+    KC_Q,         KC_W,         KC_E,              KC_R,            KC_T,              KC_Y,            KC_U,             KC_I,            KC_O,           KC_P,
+    LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_D),      LSFT_T(KC_F),    KC_G,              KC_H,            LSFT_T(KC_J),     LCTL_T(KC_K),    LALT_T(KC_L),   LGUI_T(KC_QUOT),
+    KC_Z,         ALGR_T(KC_X), KC_C,              KC_V,            KC_B,              KC_N,            KC_M,             KC_COMM,         ALGR_T(KC_DOT), KC_SLSH,
+    U_NP,         U_NP,         LT(MEDIA, KC_ESC), LT(NAV, KC_SPC), LT(MOUSE, KC_TAB), LT(SYM, KC_ENT), LT(NUM, KC_BSPC), LT(FUN, KC_DEL), U_NP,           U_NP
   )
 #endif
 };
+
+__attribute__ ((weak))
+//SSD1306 OLED update loop, make sure to enable OLED_DRIVER_ENABLE=yes in rules.mk
+#ifdef OLED_DRIVER_ENABLE
+
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+  if (!is_keyboard_master())
+    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
+  return rotation;
+}
+
+// When you add source files to SRC in rules.mk, you can use functions.
+const char *read_layer_state(void);
+const char *read_logo(void);
+void set_keylog(uint16_t keycode, keyrecord_t *record);
+const char *read_keylog(void);
+// const char *read_keylogs(void);
+
+// const char *read_mode_icon(bool swap);
+// const char *read_host_led_state(void);
+void set_timelog(void);
+const char *read_timelog(void);
+
+void oled_task_user(void) {
+  if (is_keyboard_master()) {
+    // If you want to change the display of OLED, you need to change here
+    oled_write_ln(read_layer_state(), false);
+    oled_write_ln(read_keylog(), false);
+    //oled_write_ln(read_keylogs(), false);
+    //oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
+    //oled_write_ln(read_host_led_state(), false);
+    oled_write_ln(read_timelog(), false);
+  } else {
+    oled_write(read_logo(), false);
+  }
+}
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (record->event.pressed) {
+    // oled keylogger??
+    set_keylog(keycode, record);
+    // oled timelog
+    set_timelog();
+  }
+
+  return true;
+}
+#endif // OLED_DRIVER_ENABLE
+
+#ifdef RGBLIGHT_ENABLE
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+  switch (biton32(state)) {
+    case QWERTY:
+        rgblight_enable();
+        rgblight_setrgb(RGB_WHITE);
+        break;
+
+    default: //  for any other layers, or the default layer
+        rgblight_disable();
+        break;
+    }
+  return state;
+}
+
+uint32_t layer_state_set_user(uint32_t state) {
+  switch (biton32(state)) {
+    case QWERTY:
+        rgblight_enable();
+        rgblight_setrgb(RGB_WHITE);
+        break;
+
+    default: //  for any other layers, or the default layer
+        rgblight_disable();
+        break;
+    }
+  return state;
+}
+#endif // RGBLIGHT_ENABLE 
+
+#ifdef ENCODER_ENABLE
+bool encoder_updatae_user(uint8_t index, bool clockwise) {
+  if (clockwise) {
+    tap_code(KC_VOLU);
+  } else {
+    tap_code(KC_VOLD);
+  }
+
+  return true;
+}
+#endif // ENCODER_ENABLE

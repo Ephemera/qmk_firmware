@@ -3,8 +3,10 @@
 MOUSEKEY_ENABLE = yes # Mouse keys
 EXTRAKEY_ENABLE = yes # Audio control and System control
 AUTO_SHIFT_ENABLE = yes # Auto Shift
+NKRO_ENABLE = yes
 
 SRC += manna-harbour_miryoku.c # keymap
+
 
 # alternative layouts:
 
@@ -32,3 +34,16 @@ endif
 ifneq ($(strip $(MIRYOKU_MAPPING)),)
   OPT_DEFS += -DMIRYOKU_MAPPING_$(MIRYOKU_MAPPING)
 endif
+
+ifeq ($(strip $(KEYBOARD)), lily58/rev1)
+	OLED_DRIVER_ENABLE = yes
+	SRC +=  ./lib/logo_reader.c \
+					./lib/keylogger.c \
+					./lib/layer_state_reader.c \
+					./lib/timelogger.c
+endif
+ifeq ($(strip $(KEYBOARD)), keebio/iris/rev4)
+	ENCODER_ENABLE = yes
+endif
+
+EXTRAFLAGS+=-flto
