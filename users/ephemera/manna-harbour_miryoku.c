@@ -176,6 +176,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
   #endif
   ),
+  [QWERTY] = LAYOUT_miryoku(
+    KC_Q,         KC_W,         KC_E,              KC_R,            KC_T,              KC_Y,            KC_U,             KC_I,            KC_O,           KC_P,
+    LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_D),      LSFT_T(KC_F),    KC_G,              KC_H,            LSFT_T(KC_J),     LCTL_T(KC_K),    LALT_T(KC_L),   LGUI_T(KC_SCLN),
+    KC_Z,         ALGR_T(KC_X), KC_C,              KC_V,            TD(V_QWRT),              KC_N,            KC_M,             KC_COMM,         ALGR_T(KC_DOT), KC_SLSH,
+    U_NP,         U_NP,         _______, _______, _______, _______, _______, _______, U_NP,           U_NP
+  ),
   #if defined MIRYOKU_NAV_VI
   [NAV] = LAYOUT_miryoku(
     RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,
@@ -238,12 +244,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_F11,  KC_F4,   KC_F5,   KC_F6,   KC_SLCK, U_NA,    KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
     KC_F10,  KC_F1,   KC_F2,   KC_F3,   KC_PAUS, U_NA,    U_NA,    U_NA,    KC_ALGR, U_NA,
     U_NP,    U_NP,    KC_APP,  KC_SPC,  KC_TAB,  U_NA,    U_NA,    U_NA,    U_NP,    U_NP
-  ),
-  [QWERTY] = LAYOUT_miryoku(
-    KC_Q,         KC_W,         KC_E,              KC_R,            KC_T,              KC_Y,            KC_U,             KC_I,            KC_O,           KC_P,
-    LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_D),      LSFT_T(KC_F),    KC_G,              KC_H,            LSFT_T(KC_J),     LCTL_T(KC_K),    LALT_T(KC_L),   LGUI_T(KC_QUOT),
-    KC_Z,         ALGR_T(KC_X), KC_C,              KC_V,            TD(V_QWRT),              KC_N,            KC_M,             KC_COMM,         ALGR_T(KC_DOT), KC_SLSH,
-    U_NP,         U_NP,         LT(MEDIA, KC_ESC), LT(MOUSE, KC_TAB), LT(NAV, KC_SPC), LT(SYM, KC_ENT), LT(NUM, KC_BSPC), LT(FUN, KC_DEL), U_NP,           U_NP
   )
 #endif
 };
@@ -364,10 +364,13 @@ void ql_finished(qk_tap_dance_state_t *state, void *user_data) {
         case TD_NONE:
             break;
         case TD_SINGLE_TAP:
-            tap_code(KC_V);
+            if (layer_state_is(QWERTY)) {
+              tap_code(KC_B);
+            } else {
+              tap_code(KC_V);
+            }
             break;
         case TD_SINGLE_HOLD:
-            layer_on(QWERTY);
             break;
         case TD_DOUBLE_TAP:
             // Check to see if the layer is already set
