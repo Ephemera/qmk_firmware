@@ -40,3 +40,10 @@
 #define ENCODERS_PAD_A_RIGHT { F7 }
 #define ENCODERS_PAD_B_RIGHT { F6 }
 #define ENCODER_RESOLUTION 4
+
+#ifndef NO_DEBUG
+#define NO_DEBUG
+#endif // !NO_DEBUG
+#if !defined(NO_PRINT) && !defined(CONSOLE_ENABLE)
+#define NO_PRINT
+#endif // !NO_PRINT
