@@ -2,6 +2,32 @@
 
 #include "manna-harbour_miryoku.h"
 
+// #ifdef TAP_DANCE_ENABLE
+typedef enum {
+    TD_NONE,
+    TD_UNKNOWN,
+    TD_SINGLE_TAP,
+    TD_SINGLE_HOLD,
+    TD_DOUBLE_TAP
+} td_state_t;
+
+typedef struct {
+    bool is_press_action;
+    td_state_t state;
+} td_tap_t;
+
+enum {
+    V_QWRT,
+};
+
+// Function associated with all tap dances
+td_state_t cur_dance(qk_tap_dance_state_t *state);
+
+// Functions associated with individual tap dances
+void ql_finished(qk_tap_dance_state_t *state, void *user_data);
+void ql_reset(qk_tap_dance_state_t *state, void *user_data);
+// #endif // TAP_DANCE_ENABLE
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #if defined MIRYOKU_LAYERS_FLIP
   [BASE] = LAYOUT_miryoku(
@@ -11,7 +37,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_K,              KC_M,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
     U_NP,              U_NP,              LT(FUN, KC_DEL),   LT(NUM, KC_BSPC),  LT(SYM, KC_ENT),   LT(MOUSE, KC_TAB), LT(NAV, KC_SPC),   LT(MEDIA, KC_ESC), U_NP,              U_NP
   #elif defined MIRYOKU_ALPHAS_COLEMAKDHK
-    KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,
+    KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_SCLN,
     LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_G,              KC_K,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
     KC_Z,              ALGR_T(KC_X),      KC_C,              KC_D,              KC_V,              KC_M,              KC_H,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
     U_NP,              U_NP,              LT(FUN, KC_DEL),   LT(NUM, KC_BSPC),  LT(SYM, KC_ENT),   LT(MOUSE, KC_TAB), LT(NAV, KC_SPC),   LT(MEDIA, KC_ESC), U_NP,              U_NP
@@ -114,9 +140,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_K,              KC_M,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
   #elif defined MIRYOKU_ALPHAS_COLEMAKDHK
-    KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,
-    LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_G,              KC_K,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
-    KC_Z,              ALGR_T(KC_X),      KC_C,              KC_D,              KC_V,              KC_M,              KC_H,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
+    KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_SCLN,
+    LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_G,              KC_M,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
+    KC_Z,              ALGR_T(KC_X),      KC_C,              KC_D,              KC_V,              KC_K,              KC_H,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
   #elif defined MIRYOKU_ALPHAS_DVORAK
     KC_QUOT,           KC_COMM,           KC_DOT,            KC_P,              KC_Y,              KC_F,              KC_G,              KC_C,              KC_R,              KC_L,
@@ -138,6 +164,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LGUI_T(KC_A),      LALT_T(KC_S),      LCTL_T(KC_D),      LSFT_T(KC_F),      KC_G,              KC_H,              LSFT_T(KC_J),      LCTL_T(KC_K),      LALT_T(KC_L),      LGUI_T(KC_QUOT),
     KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
+  #elif defined MIRYOKU_ALPHAS_EPHEMERA
+    KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_SCLN,
+    LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_G,              KC_M,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
+    KC_Z,              ALGR_T(KC_X),      KC_C,              KC_D,              TD(V_QWRT),              KC_K,              KC_H,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
+    U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(MOUSE, KC_TAB), LT(NAV, KC_SPC),   LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
   #else
     KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,
     LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_G,              KC_M,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
@@ -211,8 +242,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [QWERTY] = LAYOUT_miryoku(
     KC_Q,         KC_W,         KC_E,              KC_R,            KC_T,              KC_Y,            KC_U,             KC_I,            KC_O,           KC_P,
     LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_D),      LSFT_T(KC_F),    KC_G,              KC_H,            LSFT_T(KC_J),     LCTL_T(KC_K),    LALT_T(KC_L),   LGUI_T(KC_QUOT),
-    KC_Z,         ALGR_T(KC_X), KC_C,              KC_V,            KC_B,              KC_N,            KC_M,             KC_COMM,         ALGR_T(KC_DOT), KC_SLSH,
-    U_NP,         U_NP,         LT(MEDIA, KC_ESC), LT(NAV, KC_SPC), LT(MOUSE, KC_TAB), LT(SYM, KC_ENT), LT(NUM, KC_BSPC), LT(FUN, KC_DEL), U_NP,           U_NP
+    KC_Z,         ALGR_T(KC_X), KC_C,              KC_V,            TD(V_QWRT),              KC_N,            KC_M,             KC_COMM,         ALGR_T(KC_DOT), KC_SLSH,
+    U_NP,         U_NP,         LT(MEDIA, KC_ESC), LT(MOUSE, KC_TAB), LT(NAV, KC_SPC), LT(SYM, KC_ENT), LT(NUM, KC_BSPC), LT(FUN, KC_DEL), U_NP,           U_NP
   )
 #endif
 };
@@ -296,6 +327,7 @@ uint32_t layer_state_set_user(uint32_t state) {
 }
 #endif // RGBLIGHT_ENABLE 
 
+// FIXME: 
 #ifdef ENCODER_ENABLE
 bool encoder_updatae_user(uint8_t index, bool clockwise) {
   if (clockwise) {
@@ -307,3 +339,59 @@ bool encoder_updatae_user(uint8_t index, bool clockwise) {
   return true;
 }
 #endif // ENCODER_ENABLE
+
+// #ifdef TAP_DANCE_ENABLE
+// Determine the current tap dance state
+td_state_t cur_dance(qk_tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (!state->pressed) return TD_SINGLE_TAP;
+        else return TD_SINGLE_HOLD;
+    } else if (state->count == 2) return TD_DOUBLE_TAP;
+    else return TD_UNKNOWN;
+}
+
+// Initialize tap structure associated with example tap dance key
+static td_tap_t ql_tap_state = {
+    .is_press_action = true,
+    .state = TD_NONE
+};
+
+// Functions that control what our tap dance key does
+void ql_finished(qk_tap_dance_state_t *state, void *user_data) {
+    ql_tap_state.state = cur_dance(state);
+    switch (ql_tap_state.state) {
+        case TD_UNKNOWN:
+        case TD_NONE:
+            break;
+        case TD_SINGLE_TAP:
+            tap_code(KC_V);
+            break;
+        case TD_SINGLE_HOLD:
+            layer_on(QWERTY);
+            break;
+        case TD_DOUBLE_TAP:
+            // Check to see if the layer is already set
+            if (layer_state_is(QWERTY)) {
+                // If already set, then switch it off
+                layer_off(QWERTY);
+            } else {
+                // If not already set, then switch the layer on
+                layer_on(QWERTY);
+            }
+            break;
+    }
+}
+
+void ql_reset(qk_tap_dance_state_t *state, void *user_data) {
+    // If the key was held down and now is released then switch off the layer
+    if (ql_tap_state.state == TD_SINGLE_HOLD) {
+        layer_off(QWERTY);
+    }
+    ql_tap_state.state = TD_NONE;
+}
+
+// Associate our tap dance key with its functionality
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [V_QWRT] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, ql_finished, ql_reset, 275)
+};
+// #endif // TAP_DANCE_ENABLE
