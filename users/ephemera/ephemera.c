@@ -1,6 +1,6 @@
 // generated from users/ephemera/miryoku.org  -*- buffer-read-only: t -*-
 
-#include "manna-harbour_miryoku.h"
+#include "ephemera.h"
 
 // #ifdef TAP_DANCE_ENABLE
 typedef enum {

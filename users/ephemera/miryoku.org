@@ -16,10 +16,10 @@ Please see the [[https://github.com/manna-harbour/qmk_firmware/blob/miryoku/user
 
 To checkout the development branch in your existing QMK build environment:
 #+BEGIN_SRC sh :tangle no
-git remote add manna-harbour git@github.com:manna-harbour/qmk_firmware.git # ssh
-git remote add manna-harbour https://github.com/manna-harbour/qmk_firmware.git # https
-git fetch manna-harbour
-git checkout --track manna-harbour/miryoku
+#git remote add manna-harbour git@github.com:manna-harbour/qmk_firmware.git # ssh
+#git remote add manna-harbour https://github.com/manna-harbour/qmk_firmware.git # https
+#git fetch manna-harbour
+#git checkout --track manna-harbour/miryoku
 #+END_SRC
 
 Additional implementations and visualisations are provided outside QMK in the
@@ -169,7 +169,7 @@ Alternative alpha arrangements are also available.
 ***** Alphas
 
 #+NAME: colemakdh
-| Q     | W     | F     | P     | B     | J     | L     | U     | Y     | '     |
+| Q     | W     | F     | P     | B     | J     | L     | U     | Y     | ;     |
 | A     | R     | S     | T     | G     | M     | N     | E     | I     | O     |
 | Z     | X     | C     | D     | V     | K     | H     | ,     | DOT   | /     |
 
@@ -177,7 +177,7 @@ Alternative alpha arrangements are also available.
 ***** Thumbs
 
 #+NAME: thumbs
-| U_NP  | U_NP  | ESC   | SPC   | TAB   | ENT   | BSPC  | DEL   | U_NP  | U_NP  |
+| U_NP  | U_NP  | ESC   | TAB   | SPC   | ENT   | BSPC  | DEL   | U_NP  | U_NP  |
 
 
 **** Hold
@@ -186,7 +186,7 @@ Alternative alpha arrangements are also available.
 | RESET |       |       |       |       |       |       |       |       | RESET |
 | LGUI  | LALT  | LCTL  | LSFT  |       |       | LSFT  | LCTL  | LALT  | LGUI  |
 |       | ALGR  |       |       |       |       |       |       | ALGR  |       |
-| U_NP  | U_NP  | MEDIA | NAV   | MOUSE | SYM   | NUM   | FUN   | U_NP  | U_NP  |
+| U_NP  | U_NP  | MEDIA | MOUSE | NAV   | SYM   | NUM   | FUN   | U_NP  | U_NP  |
 
 
 *** Nav
@@ -631,7 +631,7 @@ Duplicate base layer tap keys on thumbs rather than trans to enable auto-repeat.
 Produce base layer from separate tap and hold tables.
 
 #+NAME: table-layout-taphold
-#+BEGIN_SRC python :var alphas_table=colemakdh :var thumbs_table=thumbs :var hold_table=hold :var symbol_names_table=symbol-names :var mods_table=mods :var nonkc_table=nonkc :tangle no :results verbatim
+#+BEGIN_SRC python :var alphas_table=colemakdh :var thumbs_table=thumbs :var hold_table=hold :var symbol_names_table=symbol-names :var mods_table=mods :var nonkc_table=nonkc :var alpha="" :tangle no :results verbatim
 width = 19
 mods_dict = dict.fromkeys(mods_table[0])
 nonkc_tuple = tuple(nonkc_table[0])
@@ -651,6 +651,10 @@ for tap_row, hold_row in zip(alphas_table + thumbs_table, hold_table):
       code = tap
     if not str(code).startswith(nonkc_tuple):
       code = 'KC_' + str(code)
+      if code == 'KC_V' and alpha == 'colemakdh':
+        code = 'TD(V_QWRT)'
+      elif code == 'KC_B' and alpha == 'qwerty':
+        code = 'TD(V_QWRT)'
     if hold in mods_dict:
       code = str(hold) + '_T(' + code + ')'
     elif hold != '' and hold != 'U_NP' and hold != 'RESET':
@@ -664,8 +668,8 @@ return results
 #+RESULTS: table-layout-taphold
 :     KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,
 :     LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_G,              KC_M,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
-:     KC_Z,              ALGR_T(KC_X),      KC_C,              KC_D,              KC_V,              KC_K,              KC_H,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
-:     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
+:     KC_Z,              ALGR_T(KC_X),      KC_C,              KC_D,              TD(V_QWRT),        KC_K,              KC_H,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
+:     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_TAB),   LT(MOUSE, KC_SPC), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
 
 
 *** table-layout-half
@@ -769,7 +773,7 @@ Produce layer enums from layer names in hold table.
 #+NAME: table-enums
 #+BEGIN_SRC python :var hold_table=hold :var mods_table=mods :tangle no
 mods_dict = dict.fromkeys(mods_table[0])
-results = 'enum layers { BASE, MBO, '
+results = 'enum layers { BASE, QWERTY, MBO, '
 for hold_row in hold_table:
   for hold in hold_row:
     if hold not in mods_dict and hold != '' and hold != 'U_NP' and hold != 'RESET':
@@ -826,8 +830,8 @@ return sys.version
 #+END_SRC
 
 #+RESULTS: python-version
-: 3.9.4 (default, Apr  9 2021, 01:15:05) 
-: [GCC 5.4.0 20160609]
+: 2.7.16 (default, Oct 10 2019, 22:02:15) 
+: [GCC 8.3.0]
 
 
 ** Data
@@ -885,7 +889,7 @@ Header for tangled source files.
 
 #+NAME: header
 #+BEGIN_SRC C :main no :tangle no
-generated from users/manna-harbour_miryoku/miryoku.org  -*- buffer-read-only: t -*-
+generated from users/ephemera/miryoku.org  -*- buffer-read-only: t -*-
 #+END_SRC
 
 
@@ -902,7 +906,7 @@ positions on the bottom row unused and the rest of the bottom row being the
 thumb keys.
 
 
-*** [[./rules.mk][users/manna-harbour_miryoku/rules.mk]]
+*** [[./rules.mk][users/ephemera/rules.mk]]
 
 Build options.  Automatically included.
 
@@ -913,7 +917,7 @@ MOUSEKEY_ENABLE = yes # Mouse keys
 EXTRAKEY_ENABLE = yes # Audio control and System control
 AUTO_SHIFT_ENABLE = yes # Auto Shift
 
-SRC += manna-harbour_miryoku.c # keymap
+SRC += ephemera.c # keymap
 
 # alternative layouts:
 
@@ -944,7 +948,7 @@ endif
 #+END_SRC
 
 
-*** [[./config.h][users/manna-harbour_miryoku/config.h]]
+*** [[./config.h][users/ephemera/config.h]]
 
 Config options.  Automatically included.
 
@@ -956,6 +960,8 @@ Config options.  Automatically included.
 // default but used in macros
 #undef TAPPING_TERM
 #define TAPPING_TERM 200
+
+#define TAPPING_TOGGLE 2
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
@@ -982,15 +988,30 @@ Config options.  Automatically included.
 #define MOUSEKEY_MAX_SPEED      6
 #undef MOUSEKEY_TIME_TO_MAX
 #define MOUSEKEY_TIME_TO_MAX    64
+
+// Encoder
+#define ENCODERS_PAD_A { B2 }
+#define ENCODERS_PAD_B { B3 }
+#define ENCODERS_PAD_A_RIGHT { F7 }
+#define ENCODERS_PAD_B_RIGHT { F6 }
+#define ENCODER_RESOLUTION 4
+
+// Reduce firmware size
+#ifndef NO_DEBUG
+#define NO_DEBUG
+#endif // !NO_DEBUG
+#if !defined(NO_PRINT) && !defined(CONSOLE_ENABLE)
+#define NO_PRINT
+#endif // !NO_PRINT
 #+END_SRC
 
 
-*** [[./manna-harbour_miryoku.h][users/manna-harbour_miryoku/manna-harbour_miryoku.h]]
+*** [[./manna-harbour_miryoku.h][users/ephemera/ephemera.h]]
 
 Keymap-related definitions.  Included from ~manna-harbour_miryoku.c~.  Can be
 included from keymap or layout ~keymap.c~ if needed.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle manna-harbour_miryoku.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ephemera.h
 // <<header>>
 
 #pragma once
@@ -1017,14 +1038,40 @@ included from keymap or layout ~keymap.c~ if needed.
 #+END_SRC
 
 
-*** [[./manna-harbour_miryoku.c][users/manna-harbour_miryoku/manna-harbour_miryoku.c]]
+*** [[./manna-harbour_miryoku.c][users/ephemera/ephemera.c]]
 
 Contains the keymap.  Added from ~rules.mk~.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle manna-harbour_miryoku.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ephemera.c
 // <<header>>
 
-#include "manna-harbour_miryoku.h"
+#include "ephemera.h"
+
+// #ifdef TAP_DANCE_ENABLE
+typedef enum {
+    TD_NONE,
+    TD_UNKNOWN,
+    TD_SINGLE_TAP,
+    TD_SINGLE_HOLD,
+    TD_DOUBLE_TAP
+} td_state_t;
+
+typedef struct {
+    bool is_press_action;
+    td_state_t state;
+} td_tap_t;
+
+enum {
+    V_QWRT,
+};
+
+// Function associated with all tap dances
+td_state_t cur_dance(qk_tap_dance_state_t *state);
+
+// Functions associated with individual tap dances
+void ql_finished(qk_tap_dance_state_t *state, void *user_data);
+void ql_reset(qk_tap_dance_state_t *state, void *user_data);
+// #endif // TAP_DANCE_ENABLE
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #if defined MIRYOKU_LAYERS_FLIP
@@ -1094,8 +1141,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   #elif defined MIRYOKU_ALPHAS_QWERTY
 <<table-layout-taphold(alphas_table=qwerty)>>
   #else
-<<table-layout-taphold(alphas_table=colemakdh)>>
+<<table-layout-taphold(alphas_table=colemakdh, alpha="colemakdh")>>
   #endif
+  ),
+  [QWERTY] = LAYOUT_miryoku(
+  <<table-layout-taphold(alphas_table=qwerty, alpha="qwerty")>>
   ),
   #if defined MIRYOKU_NAV_VI
   [NAV] = LAYOUT_miryoku(
@@ -1132,6 +1182,158 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 #endif
 };
+
+
+__attribute__ ((weak))
+//SSD1306 OLED update loop, make sure to enable OLED_DRIVER_ENABLE=yes in rules.mk
+#ifdef OLED_DRIVER_ENABLE
+
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+  if (!is_keyboard_master())
+    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
+  return rotation;
+}
+
+// When you add source files to SRC in rules.mk, you can use functions.
+const char *read_layer_state(void);
+const char *read_logo(void);
+void set_keylog(uint16_t keycode, keyrecord_t *record);
+const char *read_keylog(void);
+// const char *read_keylogs(void);
+
+// const char *read_mode_icon(bool swap);
+// const char *read_host_led_state(void);
+void set_timelog(void);
+const char *read_timelog(void);
+
+void oled_task_user(void) {
+  if (is_keyboard_master()) {
+    // If you want to change the display of OLED, you need to change here
+    oled_write_ln(read_layer_state(), false);
+    oled_write_ln(read_keylog(), false);
+    //oled_write_ln(read_keylogs(), false);
+    //oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
+    //oled_write_ln(read_host_led_state(), false);
+    oled_write_ln(read_timelog(), false);
+  } else {
+    oled_write(read_logo(), false);
+  }
+}
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (record->event.pressed) {
+    // oled keylogger??
+    set_keylog(keycode, record);
+    // oled timelog
+    set_timelog();
+  }
+
+  return true;
+}
+#endif // OLED_DRIVER_ENABLE
+
+#ifdef RGBLIGHT_ENABLE
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+  switch (biton32(state)) {
+    case QWERTY:
+        rgblight_enable();
+        rgblight_setrgb(RGB_WHITE);
+        break;
+
+    default: //  for any other layers, or the default layer
+        rgblight_disable();
+        break;
+    }
+  return state;
+}
+
+uint32_t layer_state_set_user(uint32_t state) {
+  switch (biton32(state)) {
+    case QWERTY:
+        rgblight_enable();
+        rgblight_setrgb(RGB_WHITE);
+        break;
+
+    default: //  for any other layers, or the default layer
+        rgblight_disable();
+        break;
+    }
+  return state;
+}
+#endif // RGBLIGHT_ENABLE
+
+// FIXME:
+#ifdef ENCODER_ENABLE
+bool encoder_updatae_user(uint8_t index, bool clockwise) {
+  if (clockwise) {
+    tap_code(KC_VOLU);
+  } else {
+    tap_code(KC_VOLD);
+  }
+
+  return true;
+}
+#endif // ENCODER_ENABLE
+
+// #ifdef TAP_DANCE_ENABLE
+// Determine the current tap dance state
+td_state_t cur_dance(qk_tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (!state->pressed) return TD_SINGLE_TAP;
+        else return TD_SINGLE_HOLD;
+    } else if (state->count == 2) return TD_DOUBLE_TAP;
+    else return TD_UNKNOWN;
+}
+
+// Initialize tap structure associated with example tap dance key
+static td_tap_t ql_tap_state = {
+    .is_press_action = true,
+    .state = TD_NONE
+};
+
+// Functions that control what our tap dance key does
+void ql_finished(qk_tap_dance_state_t *state, void *user_data) {
+    ql_tap_state.state = cur_dance(state);
+    switch (ql_tap_state.state) {
+        case TD_UNKNOWN:
+        case TD_NONE:
+            break;
+        case TD_SINGLE_TAP:
+            if (layer_state_is(QWERTY)) {
+              tap_code(KC_B);
+            } else {
+              tap_code(KC_V);
+            }
+            break;
+        case TD_SINGLE_HOLD:
+            break;
+        case TD_DOUBLE_TAP:
+            // Check to see if the layer is already set
+            if (layer_state_is(QWERTY)) {
+                // If already set, then switch it off
+                layer_off(QWERTY);
+            } else {
+                // If not already set, then switch the layer on
+                layer_on(QWERTY);
+            }
+            break;
+    }
+}
+
+void ql_reset(qk_tap_dance_state_t *state, void *user_data) {
+    // If the key was held down and now is released then switch off the layer
+    if (ql_tap_state.state == TD_SINGLE_HOLD) {
+        layer_off(QWERTY);
+    }
+    ql_tap_state.state = TD_NONE;
+}
+
+// Associate our tap dance key with its functionality
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [V_QWRT] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, ql_finished, ql_reset, 275)
+};
+// #endif // TAP_DANCE_ENABLE
 #+END_SRC
 
 

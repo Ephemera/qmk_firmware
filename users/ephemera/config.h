@@ -1,4 +1,4 @@
-// generated from users/manna-harbour_miryoku/miryoku.org  -*- buffer-read-only: t -*-
+// generated from users/ephemera/miryoku.org  -*- buffer-read-only: t -*-
 
 #pragma once
 
@@ -34,13 +34,14 @@
 #undef MOUSEKEY_TIME_TO_MAX
 #define MOUSEKEY_TIME_TO_MAX    64
 
-
+// Encoder
 #define ENCODERS_PAD_A { B2 }
 #define ENCODERS_PAD_B { B3 }
 #define ENCODERS_PAD_A_RIGHT { F7 }
 #define ENCODERS_PAD_B_RIGHT { F6 }
 #define ENCODER_RESOLUTION 4
 
+// Reduce firmware size
 #ifndef NO_DEBUG
 #define NO_DEBUG
 #endif // !NO_DEBUG
