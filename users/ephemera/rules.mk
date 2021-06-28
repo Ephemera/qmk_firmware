@@ -1,4 +1,4 @@
-# generated from users/manna-harbour_miryoku/miryoku.org  -*- buffer-read-only: t -*-
+# generated from users/ephemera/miryoku.org  -*- buffer-read-only: t -*-
 
 MOUSEKEY_ENABLE = yes # Mouse keys
 EXTRAKEY_ENABLE = yes # Audio control and System control
@@ -7,7 +7,6 @@ TAP_DANCE_ENABLE = yes
 NKRO_ENABLE = yes
 
 SRC += ephemera.c # keymap
-
 
 # alternative layouts:
 

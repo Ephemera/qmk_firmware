@@ -916,6 +916,8 @@ Build options.  Automatically included.
 MOUSEKEY_ENABLE = yes # Mouse keys
 EXTRAKEY_ENABLE = yes # Audio control and System control
 AUTO_SHIFT_ENABLE = yes # Auto Shift
+TAP_DANCE_ENABLE = yes
+NKRO_ENABLE = yes
 
 SRC += ephemera.c # keymap
 
@@ -945,6 +947,19 @@ endif
 ifneq ($(strip $(MIRYOKU_MAPPING)),)
   OPT_DEFS += -DMIRYOKU_MAPPING_$(MIRYOKU_MAPPING)
 endif
+
+ifeq ($(strip $(KEYBOARD)), lily58/rev1)
+	OLED_DRIVER_ENABLE = yes
+	SRC +=  ./lib/logo_reader.c \
+					./lib/keylogger.c \
+					./lib/layer_state_reader.c \
+					./lib/timelogger.c
+endif
+ifeq ($(strip $(KEYBOARD)), keebio/iris/rev4)
+	ENCODER_ENABLE = yes
+endif
+
+EXTRAFLAGS+=-flto
 #+END_SRC
 
 
@@ -1362,7 +1377,7 @@ make planck/rev6:manna-harbour_miryoku:flash FORCE_LAYOUT=ortho_4x12 # ortho_4x1
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/60_ansi/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/60_ansi/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1415,7 +1430,7 @@ make ergodox_ez:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ergodox/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ergodox/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1464,7 +1479,7 @@ make marksard/rhymestone:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_4x10/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_4x10/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1536,7 +1551,7 @@ make keebio/levinson:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_THUMBS
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_4x12/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_4x12/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1614,7 +1629,7 @@ make keebio/nyquist/rev3:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_TH
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_5x12/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_5x12/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1702,7 +1717,7 @@ make idobo:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # extende
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_5x15/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_5x15/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1770,7 +1785,7 @@ make planck/rev6:manna-harbour_miryoku:flash FORCE_LAYOUT=planck_mit # planck re
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/planck_mit/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/planck_mit/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1813,7 +1828,7 @@ make minidox:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/split_3x5_3/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/split_3x5_3/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1858,7 +1873,7 @@ make crkbd:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/split_3x6_3/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/split_3x6_3/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1909,7 +1924,7 @@ make atreus:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/atreus/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/atreus/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1953,7 +1968,7 @@ make ergotravel:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/ergotravel/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/ergotravel/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1999,7 +2014,7 @@ make for_science:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/for_science/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/for_science/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2046,7 +2061,7 @@ make gergo:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/gergo/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/gergo/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2092,7 +2107,7 @@ make handwired/dactyl_manuform/4x5:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2141,7 +2156,7 @@ make handwired/dactyl_manuform/5x6:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2191,7 +2206,7 @@ make keebio/iris/rev4:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/keebio/iris/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/keebio/iris/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2238,7 +2253,7 @@ make keyboardio/atreus:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2294,7 +2309,7 @@ make kyria:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # extende
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/kyria/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/kyria/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2355,7 +2370,7 @@ make lily58:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/lily58/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/lily58/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2402,7 +2417,7 @@ make moonlander:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/moonlander/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/moonlander/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2450,7 +2465,7 @@ make redox_w:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/redox_w/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/redox_w/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2497,7 +2512,7 @@ make sofle:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/sofle/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/sofle/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2542,7 +2557,7 @@ make torn:manna-harbour_miryoku:flash
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/torn/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/torn/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
