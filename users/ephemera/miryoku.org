@@ -54,10 +54,10 @@ Additional implementations and visualisations are provided outside QMK in the
     - [[#header][header]]
 - [[#subset-mapping][Subset Mapping]]
   - [[#userspace][Userspace]]
-    - [[#usersmanna-harbour_miryokurulesmk][users/manna-harbour_miryoku/rules.mk]]
-    - [[#usersmanna-harbour_miryokuconfigh][users/manna-harbour_miryoku/config.h]]
-    - [[#usersmanna-harbour_miryokumanna-harbour_miryokuh][users/manna-harbour_miryoku/manna-harbour_miryoku.h]]
-    - [[#usersmanna-harbour_miryokumanna-harbour_miryokuc][users/manna-harbour_miryoku/manna-harbour_miryoku.c]]
+    - [[#usersmanna-harbour_miryokurulesmk][users/ephemera/rules.mk]]
+    - [[#usersmanna-harbour_miryokuconfigh][users/ephemera/config.h]]
+    - [[#usersmanna-harbour_miryokumanna-harbour_miryokuh][users/ephemera/ephemera.h]]
+    - [[#usersmanna-harbour_miryokumanna-harbour_miryokuc][users/ephemera/ephemera.c]]
   - [[#layouts][Layouts]]
     - [[#60_ansi][60_ansi]]
     - [[#ergodox][ergodox]]
@@ -830,7 +830,7 @@ return sys.version
 #+END_SRC
 
 #+RESULTS: python-version
-: 2.7.16 (default, Oct 10 2019, 22:02:15) 
+: 2.7.16 (default, Oct 10 2019, 22:02:15)
 : [GCC 8.3.0]
 
 
@@ -1023,7 +1023,7 @@ Config options.  Automatically included.
 
 *** [[./manna-harbour_miryoku.h][users/ephemera/ephemera.h]]
 
-Keymap-related definitions.  Included from ~manna-harbour_miryoku.c~.  Can be
+Keymap-related definitions.  Included from ~ephemera.c~.  Can be
 included from keymap or layout ~keymap.c~ if needed.
 
 #+BEGIN_SRC C :main no :noweb yes :padline no :tangle ephemera.h
@@ -1351,6 +1351,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 // #endif // TAP_DANCE_ENABLE
 #+END_SRC
 
+#+RESULTS:
+
 
 ** Layouts
 
@@ -1363,8 +1365,8 @@ available, select the layout with ~FORCE_LAYOUT~ in the ~make~ command line when
 building.  E.g.:
 
 #+BEGIN_SRC sh :tangle no
-make planck/rev6:manna-harbour_miryoku:flash FORCE_LAYOUT=planck_mit # planck_mit
-make planck/rev6:manna-harbour_miryoku:flash FORCE_LAYOUT=ortho_4x12 # ortho_4x12
+make planck/rev6:ephemera:flash FORCE_LAYOUT=planck_mit # planck_mit
+make planck/rev6:ephemera:flash FORCE_LAYOUT=ortho_4x12 # ortho_4x12
 #+END_SRC
 
 
@@ -1373,11 +1375,11 @@ make planck/rev6:manna-harbour_miryoku:flash FORCE_LAYOUT=ortho_4x12 # ortho_4x1
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/mapping/miryoku-kle-mapping-60_ansi.png]]
 
 
-**** [[../../layouts/community/60_ansi/manna-harbour_miryoku/config.h][layouts/community/60_ansi/manna-harbour_miryoku/config.h]]
+**** [[../../layouts/community/60_ansi/ephemera/config.h][layouts/community/60_ansi/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/60_ansi/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/60_ansi/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1400,11 +1402,11 @@ XXX,  XXX,  K00,  K01,  K02,  K03,  K04,  XXX,  K05,  K06,  K07,  K08,  K09,  XX
 #+END_SRC
 
 
-**** [[../../layouts/community/60_ansi/manna-harbour_miryoku/keymap.c][layouts/community/60_ansi/manna-harbour_miryoku/keymap.c]]
+**** [[../../layouts/community/60_ansi/manna-harbour_ miryoku/keymap.c][layouts/community/60_ansi/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/60_ansi/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/60_ansi/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -1422,15 +1424,15 @@ To build for any keyboard using the this layout (ergodone, ergodox_ez,
 ergodox_infinity, hotdox) e.g. the ergodox_ez,
 
 #+BEGIN_SRC sh :tangle no
-make ergodox_ez:manna-harbour_miryoku:flash
+make ergodox_ez:ephemera:flash
 #+END_SRC
 
 
-**** [[../../layouts/community/ergodox/manna-harbour_miryoku/config.h][layouts/community/ergodox/manna-harbour_miryoku/config.h]]
+**** [[../../layouts/community/ergodox/ephemera/config.h][layouts/community/ergodox/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ergodox/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ergodox/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1456,11 +1458,11 @@ XXX, XXX, XXX, XXX, K32,                          K37, XXX, XXX, XXX, XXX,\
 #+END_SRC
 
 
-**** [[../../layouts/community/ergodox/manna-harbour_miryoku/keymap.c][layouts/community/ergodox/manna-harbour_miryoku/keymap.c]]
+**** [[../../layouts/community/ergodox/ephemera/keymap.c][layouts/community/ergodox/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ergodox/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ergodox/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -1471,15 +1473,15 @@ To build for any keyboard using the this layout (newgame40, pabile/p40,
 marksard/rhymestone, nimrod), e.g. marksard/rhymestone,
 
 #+BEGIN_SRC sh :tangle no
-make marksard/rhymestone:manna-harbour_miryoku:flash
+make marksard/rhymestone:ephemera:flash
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_4x10/manna-harbour_miryoku/config.h][layouts/community/ortho_4x10/manna-harbour_miryoku/config.h]]
+**** [[../../layouts/community/ortho_4x10/ephemera/config.h][layouts/community/ortho_4x10/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_4x10/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_4x10/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1499,11 +1501,11 @@ KC_NO, KC_NO, K32,   K33,   K34,   K35,   K36,   K37,   KC_NO, KC_NO\
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_4x10/manna-harbour_miryoku/keymap.c][layouts/community/ortho_4x10/manna-harbour_miryoku/keymap.c]]
+**** [[../../layouts/community/ortho_4x10/ephemera/keymap.c][layouts/community/ortho_4x10/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_4x10/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_4x10/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -1540,18 +1542,18 @@ split_blackpill, telophase, vitamins_included, wavelet, zlant, zv48, zygomorph,
 zygote):
 
 #+BEGIN_SRC sh :tangle no
-make planck/rev6:manna-harbour_miryoku:flash FORCE_LAYOUT=ortho_4x12 # planck, ortho_4x12
-make planck/rev6:manna-harbour_miryoku:flash FORCE_LAYOUT=ortho_4x12 MIRYOKU_MAPPING=EXTENDED_THUMBS # planck, ortho_4x12, extended thumbs
-make keebio/levinson:manna-harbour_miryoku:flash MIRYOKU_MAPPING=SPLIT # levinson
-make keebio/levinson:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # levinson, extended thumbs
+make planck/rev6:ephemera:flash FORCE_LAYOUT=ortho_4x12 # planck, ortho_4x12
+make planck/rev6:ephemera:flash FORCE_LAYOUT=ortho_4x12 MIRYOKU_MAPPING=EXTENDED_THUMBS # planck, ortho_4x12, extended thumbs
+make keebio/levinson:ephemera:flash MIRYOKU_MAPPING=SPLIT # levinson
+make keebio/levinson:ephemera:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # levinson, extended thumbs
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_4x12/manna-harbour_miryoku/config.h][layouts/community/ortho_4x12/manna-harbour_miryoku/config.h]]
+**** [[../../layouts/community/ortho_4x12/ephemera/config.h][layouts/community/ortho_4x12/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_4x12/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_4x12/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1599,11 +1601,11 @@ KC_NO, KC_NO, K32,   K33,   K34,   KC_NO, KC_NO, K35,   K36,   K37,   KC_NO, KC_
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_4x12/manna-harbour_miryoku/keymap.c][layouts/community/ortho_4x12/manna-harbour_miryoku/keymap.c]]
+**** [[../../layouts/community/ortho_4x12/ephemera/keymap.c][layouts/community/ortho_4x12/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_4x12/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_4x12/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -1617,19 +1619,19 @@ cannonkeys/ortho60, fractal, jj50, jnao, keebio/nyquist, keycapsss/o4l_5x12,
 preonic, rgbkb/zygomorph),
 
 #+BEGIN_SRC sh :tangle no
-make preonic/rev3:manna-harbour_miryoku:flash # preonic/rev3
-make preonic/rev3:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # preonic/rev3, extended thumbs
-make keebio/nyquist/rev3:manna-harbour_miryoku:flash MIRYOKU_MAPPING=SPLIT # nyquist/rev3, split
-make keebio/nyquist/rev3:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # nyquist/rev3, extended thumbs
+make preonic/rev3:ephemera:flash # preonic/rev3
+make preonic/rev3:ephemera:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # preonic/rev3, extended thumbs
+make keebio/nyquist/rev3:ephemera:flash MIRYOKU_MAPPING=SPLIT # nyquist/rev3, split
+make keebio/nyquist/rev3:ephemera:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # nyquist/rev3, extended thumbs
 
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_5x12/manna-harbour_miryoku/config.h][layouts/community/ortho_5x12/manna-harbour_miryoku/config.h]]
+**** [[../../layouts/community/ortho_5x12/ephemera/config.h][layouts/community/ortho_5x12/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_5x12/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_5x12/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1680,11 +1682,11 @@ KC_NO, KC_NO, K32,   K33,   K34,   KC_NO, KC_NO, K35,   K36,   K37,   KC_NO, KC_
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_5x12/manna-harbour_miryoku/keymap.c][layouts/community/ortho_5x12/manna-harbour_miryoku/keymap.c]]
+**** [[../../layouts/community/ortho_5x12/ephemera/keymap.c][layouts/community/ortho_5x12/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_5x12/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_5x12/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -1708,16 +1710,16 @@ To build for any keyboard using this layout (atomic, i75, idobo, ortho75,
 punk75, xd75), e.g. idobo:
 
 #+BEGIN_SRC sh :tangle no
-make idobo:manna-harbour_miryoku:flash
-make idobo:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # extended thumb position
+make idobo:ephemera:flash
+make idobo:ephemera:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # extended thumb position
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_5x15/manna-harbour_miryoku/config.h][layouts/community/ortho_5x15/manna-harbour_miryoku/config.h]]
+**** [[../../layouts/community/ortho_5x15/ephemera/config.h][layouts/community/ortho_5x15/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_5x15/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_5x15/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1758,11 +1760,11 @@ XXX, XXX, K32, K33, K34, XXX, XXX, XXX, XXX, XXX, K35, K36, K37, XXX, XXX\
 #+RESULTS:
 
 
-**** [[../../layouts/community/ortho_5x15/manna-harbour_miryoku/keymap.c][layouts/community/ortho_5x15/manna-harbour_miryoku/keymap.c]]
+**** [[../../layouts/community/ortho_5x15/ephemera/keymap.c][layouts/community/ortho_5x15/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_5x15/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/ortho_5x15/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -1776,16 +1778,16 @@ To build for any keyboard using this layout (bm40hsrgb, contra, efreet, eon40,
 jj40, kbd4x, mt40, niu_mini, pancake, plaid, planck, zlant), e.g. planck/ez:
 
 #+BEGIN_SRC sh :tangle no
-make planck/ez:manna-harbour_miryoku:flash # planck ez
-make planck/rev6:manna-harbour_miryoku:flash FORCE_LAYOUT=planck_mit # planck rev6, mit
+make planck/ez:ephemera:flash # planck ez
+make planck/rev6:ephemera:flash FORCE_LAYOUT=planck_mit # planck rev6, mit
 
 #+END_SRC
 
-**** [[../../layouts/community/planck_mit/manna-harbour_miryoku/config.h][layouts/community/planck_mit/manna-harbour_miryoku/config.h]]
+**** [[../../layouts/community/planck_mit/ephemera/config.h][layouts/community/planck_mit/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/planck_mit/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/planck_mit/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1805,11 +1807,11 @@ KC_NO, KC_NO, K32,   K33,   K34,      KC_NO,     K35,   K36,   K37,   KC_NO, KC_
 #+END_SRC
 
 
-**** [[../../layouts/community/planck_mit/manna-harbour_miryoku/keymap.c][layouts/community/planck_mit/manna-harbour_miryoku/keymap.c]]
+**** [[../../layouts/community/planck_mit/ephemera/keymap.c][layouts/community/planck_mit/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/planck_mit/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/planck_mit/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -1820,15 +1822,15 @@ To build for any keyboard using this layout (arch_36, centromere mini,
 gergoplex, miniaxe, minidox, squiggle 36, suihankey) e.g. the minidox,
 
 #+BEGIN_SRC sh :tangle no
-make minidox:manna-harbour_miryoku:flash
+make minidox:ephemera:flash
 #+END_SRC
 
 
-**** [[../../layouts/community/split_3x5_3/manna-harbour_miryoku/config.h][layouts/community/split_3x5_3/manna-harbour_miryoku/config.h]]
+**** [[../../layouts/community/split_3x5_3/ephemera/config.h][layouts/community/split_3x5_3/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/split_3x5_3/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/split_3x5_3/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1848,11 +1850,11 @@ K20,   K21,   K22,   K23,   K24,          K25,   K26,   K27,   K28,   K29,\
 #+END_SRC
 
 
-**** [[../../layouts/community/split_3x5_3/manna-harbour_miryoku/keymap.c][layouts/community/split_3x5_3/manna-harbour_miryoku/keymap.c]]
+**** [[../../layouts/community/split_3x5_3/ephemera/keymap.c][layouts/community/split_3x5_3/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/split_3x5_3/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/split_3x5_3/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -1865,15 +1867,15 @@ To build for any keyboard using the this layout (centromere, crkbd) e.g. the
 crkbd,
 
 #+BEGIN_SRC sh :tangle no
-make crkbd:manna-harbour_miryoku:flash
+make crkbd:ephemera:flash
 #+END_SRC
 
 
-**** [[../../layouts/community/split_3x6_3/manna-harbour_miryoku/config.h][layouts/community/split_3x6_3/manna-harbour_miryoku/config.h]]
+**** [[../../layouts/community/split_3x6_3/ephemera/config.h][layouts/community/split_3x6_3/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/split_3x6_3/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/split_3x6_3/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1893,11 +1895,11 @@ KC_NO, K20,   K21,   K22,   K23,   K24,          K25,   K26,   K27,   K28,   K29
 #+END_SRC
 
 
-**** [[../../layouts/community/split_3x6_3/manna-harbour_miryoku/keymap.c][layouts/community/split_3x6_3/manna-harbour_miryoku/keymap.c]]
+**** [[../../layouts/community/split_3x6_3/ephemera/keymap.c][layouts/community/split_3x6_3/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/split_3x6_3/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../layouts/community/split_3x6_3/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -1916,15 +1918,15 @@ Only the main 5x3 alphas and the inner 3 thumb keys are used.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make atreus:manna-harbour_miryoku:flash
+make atreus:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/atreus/keymaps/manna-harbour_miryoku/config.h][keyboards/atreus/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/atreus/keymaps/ephemera/config.h][keyboards/atreus/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/atreus/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/atreus/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1946,11 +1948,11 @@ XXX, XXX, XXX, K32, K33, K34,      K35, K36, K37, XXX, XXX, XXX\
 #+END_SRC
 
 
-**** [[../../keyboards/atreus/keymaps/manna-harbour_miryoku/keymap.c][keyboards/atreus/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/atreus/keymaps/ephemera/keymap.c][keyboards/atreus/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/atreus/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/atreus/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -1960,15 +1962,15 @@ Required by the build system.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make ergotravel:manna-harbour_miryoku:flash
+make ergotravel:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/ergotravel/keymaps/manna-harbour_miryoku/config.h][keyboards/ergotravel/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/ergotravel/keymaps/ephemera/config.h][keyboards/ergotravel/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/ergotravel/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/ergotravel/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -1990,11 +1992,11 @@ XXX, XXX, XXX, K32,      K33, K34,       K35, K36,      K37, XXX, XXX, XXX  \
 #+END_SRC
 
 
-**** [[../../keyboards/ergotravel/keymaps/manna-harbour_miryoku/keymap.c][keyboards/ergotravel/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/ergotravel/keymaps/ephemera/keymap.c][keyboards/ergotravel/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/ergotravel/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/ergotravel/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2006,15 +2008,15 @@ The top row is unused.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make for_science:manna-harbour_miryoku:flash
+make for_science:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/for_science/keymaps/manna-harbour_miryoku/config.h][keyboards/for_science/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/for_science/keymaps/ephemera/config.h][keyboards/for_science/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/for_science/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/for_science/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2037,11 +2039,11 @@ K20, K21, K22, K23, K24,     K25, K26, K27, K28, K29,\
 #+END_SRC
 
 
-**** [[../../keyboards/for_science/keymaps/manna-harbour_miryoku/keymap.c][keyboards/for_science/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/for_science/keymaps/ephemera/keymap.c][keyboards/for_science/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/for_science/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/for_science/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2053,15 +2055,15 @@ Only the main 5x3 alphas and the outer 3 thumb keys are used.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make gergo:manna-harbour_miryoku:flash
+make gergo:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/gergo/keymaps/manna-harbour_miryoku/config.h][keyboards/gergo/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/gergo/keymaps/ephemera/config.h][keyboards/gergo/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/gergo/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/gergo/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2083,11 +2085,11 @@ XXX, K20, K21, K22, K23, K24, XXX, XXX,      XXX, XXX, K25, K26, K27, K28, K29, 
 #+END_SRC
 
 
-**** [[../../keyboards/gergo/keymaps/manna-harbour_miryoku/keymap.c][keyboards/gergo/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/gergo/keymaps/ephemera/keymap.c][keyboards/gergo/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/gergo/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/gergo/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2099,15 +2101,15 @@ Only the main 5x3 alphas and the main 3 thumb keys are used.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make handwired/dactyl_manuform/4x5:manna-harbour_miryoku:flash
+make handwired/dactyl_manuform/4x5:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/config.h][keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/handwired/dactyl_manuform/4x5/keymaps/ephemera/config.h][keyboards/handwired/dactyl_manuform/4x5/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/handwired/dactyl_manuform/4x5/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2132,11 +2134,11 @@ K20, K21, K22, K23, K24,                         K25, K26, K27, K28, K29,\
 #+END_SRC
 
 
-**** [[../../keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/keymap.c][keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/handwired/dactyl_manuform/4x5/keymaps/ephemera/keymap.c][keyboards/handwired/dactyl_manuform/4x5/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/handwired/dactyl_manuform/4x5/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2148,15 +2150,15 @@ Only the main 5x3 alphas and the main 3 thumb keys are used.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make handwired/dactyl_manuform/5x6:manna-harbour_miryoku:flash
+make handwired/dactyl_manuform/5x6:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/config.h][keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/handwired/dactyl_manuform/5x6/keymaps/ephemera/config.h][keyboards/handwired/dactyl_manuform/5x6/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/handwired/dactyl_manuform/5x6/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2182,11 +2184,11 @@ XXX, K20, K21, K22, K23, K24,                         K25, K26, K27, K28, K29, X
 #+END_SRC
 
 
-**** [[../../keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/keymap.c][keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/handwired/dactyl_manuform/5x6/keymaps/ephemera/keymap.c][keyboards/handwired/dactyl_manuform/5x6/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/handwired/dactyl_manuform/5x6/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2198,15 +2200,15 @@ Only the main 5x3 alphas and the bottom 3 thumb keys are used.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make keebio/iris/rev4:manna-harbour_miryoku:flash
+make keebio/iris/rev4:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/keebio/iris/keymaps/manna-harbour_miryoku/config.h][keyboards/keebio/iris/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/keebio/iris/keymaps/ephemera/config.h][keyboards/keebio/iris/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/keebio/iris/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/keebio/iris/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2229,11 +2231,11 @@ XXX, K20, K21, K22, K23, K24, XXX,      XXX, K25, K26, K27, K28, K29, XXX,\
 #+END_SRC
 
 
-**** [[../../keyboards/keebio/iris/keymaps/manna-harbour_miryoku/keymap.c][keyboards/keebio/iris/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/keebio/iris/keymaps/ephemera/keymap.c][keyboards/keebio/iris/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/keebio/iris/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/keebio/iris/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2245,15 +2247,15 @@ Only the main 5x3 alphas and the inner 3 thumb keys are used.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make keyboardio/atreus:manna-harbour_miryoku:flash
+make keyboardio/atreus:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/config.h][keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/keyboardio/atreus/keymaps/ephemera/config.h][keyboards/keyboardio/atreus/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/keyboardio/atreus/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2275,11 +2277,11 @@ XXX, XXX, XXX, K32, K33, K34,      K35, K36, K37, XXX, XXX, XXX \
 #+END_SRC
 
 
-**** [[../../keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/keymap.c][keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/keyboardio/atreus/keymaps/ephemera/keymap.c][keyboards/keyboardio/atreus/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/keyboardio/atreus/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2300,12 +2302,12 @@ position in the direction of thumb extension.  To select this mapping, append
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make kyria:manna-harbour_miryoku:flash
-make kyria:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # extended thumb position
+make kyria:ephemera:flash
+make kyria:ephemera:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # extended thumb position
 #+END_SRC
 
 
-**** [[../../keyboards/kyria/keymaps/manna-harbour_miryoku/config.h][keyboards/kyria/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/kyria/keymaps/ephemera/config.h][keyboards/kyria/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
@@ -2346,11 +2348,11 @@ XXX, K20, K21, K22, K23, K24, XXX, XXX,      XXX, XXX, K25, K26, K27, K28, K29, 
 #+END_SRC
 
 
-**** [[../../keyboards/kyria/keymaps/manna-harbour_miryoku/keymap.c][keyboards/kyria/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/kyria/keymaps/ephemera/keymap.c][keyboards/kyria/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/kyria/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/kyria/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2362,15 +2364,15 @@ Only the main 5x3 alphas and the inner 3 thumb keys are used.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make lily58:manna-harbour_miryoku:flash
+make lily58:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/lily58/keymaps/manna-harbour_miryoku/config.h][keyboards/lily58/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/lily58/keymaps/ephemera/config.h][keyboards/lily58/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/lily58/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/lily58/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2393,11 +2395,11 @@ XXX, K20, K21, K22, K23, K24, XXX,      XXX, K25, K26, K27, K28, K29, XXX,\
 #+END_SRC
 
 
-**** [[../../keyboards/lily58/keymaps/manna-harbour_miryoku/keymap.c][keyboards/lily58/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/lily58/keymaps/ephemera/keymap.c][keyboards/lily58/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/lily58/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/lily58/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2409,15 +2411,15 @@ Only the main 5x3 alphas and the main 3 thumb keys are used.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make moonlander:manna-harbour_miryoku:flash
+make moonlander:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/moonlander/keymaps/manna-harbour_miryoku/config.h][keyboards/moonlander/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/moonlander/keymaps/ephemera/config.h][keyboards/moonlander/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/moonlander/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/moonlander/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2441,11 +2443,11 @@ XXX, XXX, XXX, XXX, XXX,      XXX,     XXX,      XXX, XXX, XXX, XXX, XXX,\
 #+END_SRC
 
 
-**** [[../../keyboards/moonlander/keymaps/manna-harbour_miryoku/keymap.c][keyboards/moonlander/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/moonlander/keymaps/ephemera/keymap.c][keyboards/moonlander/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/moonlander/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/moonlander/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2457,15 +2459,15 @@ Only the main 5x3 alphas and the main 3 thumb keys are used.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make redox_w:manna-harbour_miryoku:flash
+make redox_w:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/redox_w/keymaps/manna-harbour_miryoku/config.h][keyboards/redox_w/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/redox_w/keymaps/ephemera/config.h][keyboards/redox_w/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/redox_w/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/redox_w/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2490,11 +2492,11 @@ XXX, XXX, XXX, XXX,    K32,   K33, K34,      K35, K36,    K37,   XXX, XXX, XXX, 
 #+RESULTS:
 
 
-**** [[../../keyboards/redox_w/keymaps/manna-harbour_miryoku/keymap.c][keyboards/redox_w/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/redox_w/keymaps/ephemera/keymap.c][keyboards/redox_w/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/redox_w/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/redox_w/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2504,15 +2506,15 @@ Required by the build system.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make sofle:manna-harbour_miryoku:flash
+make sofle:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/sofle/keymaps/manna-harbour_miryoku/config.h][keyboards/sofle/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/sofle/keymaps/ephemera/config.h][keyboards/sofle/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/sofle/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/sofle/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2535,11 +2537,11 @@ XXX, K20, K21, K22, K23, K24, XXX,      XXX, K25, K26, K27, K28, K29, XXX,\
 #+END_SRC
 
 
-**** [[../../keyboards/sofle/keymaps/manna-harbour_miryoku/keymap.c][keyboards/sofle/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/sofle/keymaps/ephemera/keymap.c][keyboards/sofle/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/sofle/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/sofle/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2549,15 +2551,15 @@ Required by the build system.
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make torn:manna-harbour_miryoku:flash
+make torn:ephemera:flash
 #+END_SRC
 
 
-**** [[../../keyboards/torn/keymaps/manna-harbour_miryoku/config.h][keyboards/torn/keymaps/manna-harbour_miryoku/config.h]]
+**** [[../../keyboards/torn/keymaps/ephemera/config.h][keyboards/torn/keymaps/ephemera/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/torn/keymaps/manna-harbour_miryoku/config.h :mkdirp yes
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/torn/keymaps/ephemera/config.h :mkdirp yes
 // <<header>>
 
 #pragma once
@@ -2579,11 +2581,11 @@ KC_NO, K20,   K21,   K22,   K23,   K24,          K25,   K26,   K27,   K28,   K29
 #+RESULTS:
 
 
-**** [[../../keyboards/torn/keymaps/manna-harbour_miryoku/keymap.c][keyboards/torn/keymaps/manna-harbour_miryoku/keymap.c]]
+**** [[../../keyboards/torn/keymaps/ephemera/keymap.c][keyboards/torn/keymaps/ephemera/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/torn/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/torn/keymaps/ephemera/keymap.c
 // <<header>>
 #+END_SRC
 
@@ -2592,8 +2594,8 @@ Required by the build system.
 
 To add customisations to a keyboard or layout while importing the miryoku
 keymap, copy ~config.h~ and ~keymap.c~ from the keyboard or layout's
-~manna-harbour_miryoku/~ directory to a new directory, and create ~rules.mk~
-containing ~USER_NAME := manna-harbour_miryoku~.  The miryoku keymap will be
+~ephemera/~ directory to a new directory, and create ~rules.mk~
+containing ~USER_NAME := ephemera~.  The miryoku keymap will be
 imported and customisations can be added to those files as usual.  Keycodes can
 be added to unused keys by editing ~LAYOUT_miryoku~ in ~config.h~.
 
