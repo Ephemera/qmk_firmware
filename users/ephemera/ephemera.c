@@ -376,7 +376,6 @@ void ql_finished(qk_tap_dance_state_t *state, void *user_data) {
             } else {
                 // If not already set, then switch the layer on
                 layer_on(QWERTY);
-                tap_code(KC_HAEN);
             }
             break;
     }
