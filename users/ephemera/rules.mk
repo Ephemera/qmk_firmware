@@ -36,7 +36,8 @@ ifneq ($(strip $(MIRYOKU_MAPPING)),)
 endif
 
 ifeq ($(strip $(KEYBOARD)), lily58/rev1)
-	OLED_DRIVER_ENABLE = yes
+	OLED_ENABLE = yes
+	OLED_DRIVER = SSD1306
 	SRC +=  ./lib/logo_reader.c \
 					./lib/keylogger.c \
 					./lib/layer_state_reader.c \

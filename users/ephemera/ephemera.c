@@ -2,7 +2,7 @@
 
 #include "ephemera.h"
 
-// #ifdef TAP_DANCE_ENABLE
+#ifdef TAP_DANCE_ENABLE
 typedef enum {
     TD_NONE,
     TD_UNKNOWN,
@@ -18,6 +18,7 @@ typedef struct {
 
 enum {
     V_QWRT,
+    TD_ESC_SLEEP
 };
 
 // Function associated with all tap dances
@@ -26,7 +27,7 @@ td_state_t cur_dance(qk_tap_dance_state_t *state);
 // Functions associated with individual tap dances
 void ql_finished(qk_tap_dance_state_t *state, void *user_data);
 void ql_reset(qk_tap_dance_state_t *state, void *user_data);
-// #endif // TAP_DANCE_ENABLE
+#endif // TAP_DANCE_ENABLE
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #if defined MIRYOKU_LAYERS_FLIP
@@ -246,7 +247,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 __attribute__ ((weak))
 //SSD1306 OLED update loop, make sure to enable OLED_DRIVER_ENABLE=yes in rules.mk
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   if (!is_keyboard_master())
@@ -266,7 +267,7 @@ const char *read_keylog(void);
 void set_timelog(void);
 const char *read_timelog(void);
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
   if (is_keyboard_master()) {
     // If you want to change the display of OLED, you need to change here
     oled_write_ln(read_layer_state(), false);
@@ -278,6 +279,8 @@ void oled_task_user(void) {
   } else {
     oled_write(read_logo(), false);
   }
+
+  return false;
 }
 
 
@@ -291,7 +294,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   return true;
 }
-#endif // OLED_DRIVER_ENABLE
+#endif // OLED_ENABLE
 
 #ifdef RGBLIGHT_ENABLE
 layer_state_t default_layer_state_set_user(layer_state_t state) {
@@ -336,7 +339,7 @@ bool encoder_updatae_user(uint8_t index, bool clockwise) {
 }
 #endif // ENCODER_ENABLE
 
-// #ifdef TAP_DANCE_ENABLE
+#ifdef TAP_DANCE_ENABLE
 // Determine the current tap dance state
 td_state_t cur_dance(qk_tap_dance_state_t *state) {
     if (state->count == 1) {
@@ -391,6 +394,9 @@ void ql_reset(qk_tap_dance_state_t *state, void *user_data) {
 
 // Associate our tap dance key with its functionality
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [V_QWRT] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, ql_finished, ql_reset, 275)
+    [V_QWRT] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, ql_finished, ql_reset, 275),
+    [TD_ESC_SLEEP] = ACTION_TAP_DANCE_DOUBLE(KC_ESC, KC_SLEP)
 };
-// #endif // TAP_DANCE_ENABLE
+
+
+#endif // TAP_DANCE_ENABLE
