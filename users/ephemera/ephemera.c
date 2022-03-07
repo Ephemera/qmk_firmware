@@ -3,30 +3,9 @@
 #include "ephemera.h"
 
 #ifdef TAP_DANCE_ENABLE
-typedef enum {
-    TD_NONE,
-    TD_UNKNOWN,
-    TD_SINGLE_TAP,
-    TD_SINGLE_HOLD,
-    TD_DOUBLE_TAP
-} td_state_t;
-
-typedef struct {
-    bool is_press_action;
-    td_state_t state;
-} td_tap_t;
-
 enum {
-    V_QWRT,
     TD_ESC_SLEEP
 };
-
-// Function associated with all tap dances
-td_state_t cur_dance(qk_tap_dance_state_t *state);
-
-// Functions associated with individual tap dances
-void ql_finished(qk_tap_dance_state_t *state, void *user_data);
-void ql_reset(qk_tap_dance_state_t *state, void *user_data);
 #endif // TAP_DANCE_ENABLE
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -168,14 +147,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   #else
     KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,
     LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_G,              KC_M,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
-    KC_Z,              ALGR_T(KC_X),      KC_C,              KC_D,              TD(V_QWRT),        KC_K,              KC_H,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
+    KC_Z,              ALGR_T(KC_X),      KC_C,              KC_D,              KC_V,        KC_K,              KC_H,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(MOUSE, KC_TAB), LT(NAV, KC_SPC),   LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
   #endif
   ),
   [QWERTY] = LAYOUT_miryoku(
       KC_Q,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,              KC_I,              KC_O,              KC_P,
       LGUI_T(KC_A),      LALT_T(KC_S),      LCTL_T(KC_D),      LSFT_T(KC_F),      KC_G,              KC_H,              LSFT_T(KC_J),      LCTL_T(KC_K),      LALT_T(KC_L),      LGUI_T(KC_SCLN),
-      KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              TD(V_QWRT),        KC_N,              KC_M,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
+      KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,        KC_N,              KC_M,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
       U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(MOUSE, KC_TAB), LT(NAV, KC_SPC),   LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
   ),
   #if defined MIRYOKU_NAV_VI
@@ -291,7 +270,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // oled timelog
     set_timelog();
   }
-
   return true;
 }
 #endif // OLED_ENABLE
@@ -340,63 +318,41 @@ bool encoder_updatae_user(uint8_t index, bool clockwise) {
 #endif // ENCODER_ENABLE
 
 #ifdef TAP_DANCE_ENABLE
-// Determine the current tap dance state
-td_state_t cur_dance(qk_tap_dance_state_t *state) {
-    if (state->count == 1) {
-        if (!state->pressed) return TD_SINGLE_TAP;
-        else return TD_SINGLE_HOLD;
-    } else if (state->count == 2) return TD_DOUBLE_TAP;
-    else return TD_UNKNOWN;
-}
-
-// Initialize tap structure associated with example tap dance key
-static td_tap_t ql_tap_state = {
-    .is_press_action = true,
-    .state = TD_NONE
-};
-
-// Functions that control what our tap dance key does
-void ql_finished(qk_tap_dance_state_t *state, void *user_data) {
-    ql_tap_state.state = cur_dance(state);
-    switch (ql_tap_state.state) {
-        case TD_UNKNOWN:
-        case TD_NONE:
-            break;
-        case TD_SINGLE_TAP:
-            if (layer_state_is(QWERTY)) {
-              tap_code(KC_B);
-            } else {
-              tap_code(KC_V);
-            }
-            break;
-        case TD_SINGLE_HOLD:
-            break;
-        case TD_DOUBLE_TAP:
-            // Check to see if the layer is already set
-            if (layer_state_is(QWERTY)) {
-                // If already set, then switch it off
-                layer_off(QWERTY);
-            } else {
-                // If not already set, then switch the layer on
-                layer_on(QWERTY);
-            }
-            break;
-    }
-}
-
-void ql_reset(qk_tap_dance_state_t *state, void *user_data) {
-    // If the key was held down and now is released then switch off the layer
-    if (ql_tap_state.state == TD_SINGLE_HOLD) {
-        // layer_off(QWERTY);
-    }
-    ql_tap_state.state = TD_NONE;
-}
-
 // Associate our tap dance key with its functionality
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [V_QWRT] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, ql_finished, ql_reset, 275),
     [TD_ESC_SLEEP] = ACTION_TAP_DANCE_DOUBLE(KC_ESC, KC_SLEP)
 };
-
-
 #endif // TAP_DANCE_ENABLE
+
+#ifdef COMBO_ENABLE
+enum combo_events {
+  QWERTY_ON,
+  QWERTY_OFF,
+  COMBO_LENGTH
+};
+uint16_t COMBO_LEN = COMBO_LENGTH;
+
+const uint16_t PROGMEM qwerty_on[] = {KC_J, KC_L, COMBO_END};
+const uint16_t PROGMEM qwerty_off[] = {KC_Y, KC_U, COMBO_END};
+
+combo_t key_combos[] = {
+  [QWERTY_ON] = COMBO(qwerty_on, KC_NO),
+  [QWERTY_OFF] = COMBO(qwerty_off, KC_NO),
+};
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+  switch(combo_index) {
+    case QWERTY_ON:
+      if (pressed) {
+        layer_on(QWERTY);
+      }
+      break;
+    case QWERTY_OFF:
+      if (pressed) {
+        layer_off(QWERTY);
+      }
+  }
+}
+
+#endif // COMBO_ENABLE
+

@@ -5,6 +5,7 @@ EXTRAKEY_ENABLE = yes # Audio control and System control
 AUTO_SHIFT_ENABLE = yes # Auto Shift
 TAP_DANCE_ENABLE = yes
 NKRO_ENABLE = yes
+COMBO_ENABLE = yes
 
 SRC += ephemera.c # keymap
 
