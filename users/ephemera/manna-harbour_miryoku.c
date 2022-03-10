@@ -69,23 +69,50 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (!is_keyboard_master())
+  if (!is_keyboard_master()) {
     return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
-  return rotation;
-
+  } else {
+    return OLED_ROTATION_270;
+  }
 }
 
 // When you add source files to SRC in rules.mk, you can use functions.
-const char *read_layer_state(void);
 const char *read_logo(void);
 
 bool oled_task_user(void) {
   if (is_keyboard_master()) {
     // If you want to change the display of OLED, you need to change here
-    oled_write_ln(read_layer_state(), false);
-    // oled_write_ln(read_keylog(), false);
-    //oled_write_ln(read_host_led_state(), false);
-    // oled_write_ln(read_timelog(), false);
+    switch (get_highest_layer(layer_state)) {
+      case BASE:
+        oled_write_ln_P(PSTR("BASE"), false);
+        break;
+      case NAV:
+        oled_write_ln_P(PSTR("NAV"), false);
+        break;
+      case MOUSE:
+        oled_write_ln_P(PSTR("MOUSE"), false);
+        break;
+      case MEDIA:
+        oled_write_ln_P(PSTR("MEDIA"), false);
+        break;
+      case NUM:
+        oled_write_ln_P(PSTR("NUM"), false);
+        break;
+      case SYM:
+        oled_write_ln_P(PSTR("SYM"), false);
+        break;
+      case FUN:
+        oled_write_ln_P(PSTR("FUN"), false);
+        break;
+      case BUTTON:
+        oled_write_ln_P(PSTR("BTTN"), false);
+        break;
+      case QWERTY:
+        oled_write_ln_P(PSTR("QWRT"), false);
+        break;
+      default:
+        oled_write_ln_P(PSTR("Undefined"), false);
+    }
   } else {
     oled_write(read_logo(), false);
   }

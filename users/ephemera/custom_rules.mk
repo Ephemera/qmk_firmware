@@ -14,8 +14,7 @@ SPACE_CADET_ENABLE=no
 ifeq ($(strip $(KEYBOARD)), lily58/rev1)
 	OLED_ENABLE = yes
 	OLED_DRIVER = SSD1306
-	SRC +=  ./lib/logo_reader.c \
-					./lib/layer_state_reader.c
+	SRC +=  ./lib/logo_reader.c
 endif
 ifeq ($(strip $(KEYBOARD)), keebio/iris/rev4)
 	ENCODER_ENABLE = yes
