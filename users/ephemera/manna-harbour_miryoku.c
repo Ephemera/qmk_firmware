@@ -139,7 +139,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 #endif // OLED_ENABLE
-  
+
 #ifdef RGBLIGHT_ENABLE
 layer_state_t default_layer_state_set_user(layer_state_t state) {
   switch (biton32(state)) {
@@ -169,7 +169,7 @@ uint32_t layer_state_set_user(uint32_t state) {
   return state;
 }
 #endif // RGBLIGHT_ENABLE
-       
+
 // FIXME:
 #ifdef ENCODER_ENABLE
 bool encoder_updatae_user(uint8_t index, bool clockwise) {
@@ -182,7 +182,7 @@ bool encoder_updatae_user(uint8_t index, bool clockwise) {
   return true;
 }
 #endif // ENCODER_ENABLE
-       
+
 #ifdef COMBO_ENABLE
 enum combo_events {
   QWERTY_ON,
@@ -214,4 +214,3 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 }
 
 #endif // COMBO_ENABLE
-
