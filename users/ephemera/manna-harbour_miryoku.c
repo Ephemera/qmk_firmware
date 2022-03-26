@@ -172,7 +172,7 @@ uint32_t layer_state_set_user(uint32_t state) {
 
 // FIXME:
 #ifdef ENCODER_ENABLE
-bool encoder_updatae_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
   if (clockwise) {
     tap_code(KC_VOLU);
   } else {
